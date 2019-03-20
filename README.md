@@ -27,8 +27,8 @@ These commands will bring up the Vagrant box, SSH into it, and then remove it re
 
 ## Summary of examples
 
-1. Single box with some custom configuration.
-2. Single box with VirtualBox provider.
-<Delete orignal 3~, We don't use puppet>
-3. Multi box
-4. Provision Script
+1. basic
+2. provider
+3. MultiBox
+4. ProvisionScript
+5. Docker Build Example
