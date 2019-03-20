@@ -29,8 +29,6 @@ These commands will bring up the Vagrant box, SSH into it, and then remove it re
 
 1. Single box with some custom configuration.
 2. Single box with VirtualBox provider.
-3. Single box with VirtualBox provider and Puppet provisioning.
-4. Single box with Apache and sample static site installed via Puppet.
-5. Separate Web and database servers serving up static/dynamic sites via Puppet.
-6. Pulling out all the stops with cluster of seven Vagrant boxes.
-7. Single box with AWS provider and sample static/dynamic sites via Puppet.
+<Delete orignal 3~, We don't use puppet>
+3. Multi box
+4. Provision Script
