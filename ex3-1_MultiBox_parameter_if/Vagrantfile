@@ -1,0 +1,28 @@
+# Example 3 : Multi VM
+#
+# Single box with VirtualBox provider.
+#
+# NOTE: Make sure you have the ubuntu/trusty64 base box installed...
+# vagrant box add ubuntu/trusty64 http://files.vagrantup.com/ubuntu/trusty64.box
+#
+# VirtualBox modifyvm docs: http://www.virtualbox.org/manual/ch08.html#vboxmanage-modifyvm
+
+VAGRANTFILE_API_VERSION = "2"
+NODE_COUNT = ENV['NODE_COUNT'].to_i > 0  ? ENV['NODE_COUNT'].to_i : 3
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  NODE_COUNT.times do |i|
+    config.vm.define "node-#{i}" do |node|
+      node.vm.provision "shell",
+        inline: "echo hello from node #{i}"
+      config.vm.box = "lasp/ubuntu18.04"
+      config.vm.hostname = "ubuntu.box"
+      config.vm.network :private_network, ip: "172.22.101.1#{i}"
+    end
+    
+  end
+
+
+  
+end

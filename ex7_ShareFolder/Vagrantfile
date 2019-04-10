@@ -1,0 +1,25 @@
+# Example 1
+#
+# Single box with some custom configuration.
+#
+# NOTE: Make sure you have the ubuntu/trusty64 base box installed...
+# vagrant box add ubuntu/trusty64 http://files.vagrantup.com/ubuntu/trusty64.box
+
+sPath=ENV['SHARE_PATH']
+puts "------------------------------"
+if sPath.to_s.length > 0 
+    puts sPath
+else
+    puts "Usage : SHARE_PATH=$(pwd)/df vagrant up"
+end
+puts "------------------------------"
+
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "lasp/ubuntu18.04"
+  config.vm.hostname = "ubuntu.box"
+  config.vm.network :private_network, ip: "172.22.101.11"
+  if sPath.to_s.length > 0 
+    config.vm.synced_folder sPath, "/home/vagrant/forVm"
+  end
+end
