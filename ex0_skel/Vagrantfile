@@ -1,7 +1,7 @@
 # Example 0
 
-# It is created from "vagrant init lasp/ubuntu18.04".
+# It is created from "vagrant init lasp/ubuntu18.04 ".
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "lasp/ubuntu18.04"
+  config.vm.box = "lasp/ubuntu18.04 "
 end
