@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 SUBNET="172.3.4"
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "lasp/ubuntu18.04"
   config.vm.define "jm1" do |server|
     server.vm.hostname = "jm1"
     server.vm.provider :virtualbox do |v|
