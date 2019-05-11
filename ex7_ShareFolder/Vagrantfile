@@ -17,7 +17,7 @@ puts "------------------------------"
 
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "lasp/ubuntu18.04 "
+  config.vm.box = "lasp/ubuntu18.04"
   config.vm.hostname = "ubuntu.box"
   config.vm.network :private_network, ip: "172.3.4.11"
   if sPath.to_s.length > 0 
