@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+SUBNET="172.3.4"
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.define "jm1" do |server|
+    server.vm.hostname = "jm1"
+    server.vm.provider :virtualbox do |v|
+      v.name = "jm1"
+    end    
+    server.vm.network "private_network", ip: "#{SUBNET}.101"
+  end  
+  config.vm.define "jm2" do |jm|
+    server.vm.hostname = "jm2"
+    jm.vm.provider :virtualbox do |v|
+      v.name = "jm2"
+    end    
+    jm.vm.network "private_network", ip: "#{SUBNET}.111"
+  end  
+
+end
+

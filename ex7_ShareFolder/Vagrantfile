@@ -15,11 +15,15 @@ end
 puts "------------------------------"
 
 
+
 Vagrant.configure("2") do |config|
   config.vm.box = "lasp/ubuntu18.04"
   config.vm.hostname = "ubuntu.box"
-  config.vm.network :private_network, ip: "172.22.101.11"
+  config.vm.network :private_network, ip: "172.3.4.11"
   if sPath.to_s.length > 0 
     config.vm.synced_folder sPath, "/home/vagrant/forVm"
+    # config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
+    # config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant"
+    # config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["uid=1234", "gid=1234"]
   end
 end
