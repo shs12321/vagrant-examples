@@ -1,0 +1,13 @@
+server:
+  cpus: 1
+  memory: 1500
+node:
+  count: 2
+  cpus: 1
+  memory: 1500
+ip:
+  master: 172.22.101.100
+  node:   172.22.101.111
+net:
+  private_nic_type: 82545EM
+  network_type: private_network

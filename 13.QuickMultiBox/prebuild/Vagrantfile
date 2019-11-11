@@ -1,0 +1,19 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box_check_update = true
+  config.vm.define "prebuild" do |node|
+  file = File.open("../config/orignalImage.txt")  
+  node.vm.box = file.read
+  node.vm.hostname = "prebuild"
+  node.vm.network "private_network", ip: "172.17.8.9"
+
+  node.vm.provider "virtualbox" do |vb|
+    vb.name="prebuild"
+    vb.cpus = 1
+    vb.memory = "1024"
+    end
+    node.vm.provision "shell", path: "install.sh", args:[]
+  end  
+end

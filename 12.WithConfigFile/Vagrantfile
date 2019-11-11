@@ -1,0 +1,47 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+require 'ipaddr'
+require 'yaml'
+
+x = YAML.load_file('config.yaml')
+puts "Config: #{x.inspect}\n\n"
+$private_nic_type = x.fetch('net').fetch('private_nic_type')
+
+Vagrant.configure("2") do |config|
+  config.vm.box_check_update = false
+  config.vm.provider 'virtualbox' do |vb|
+    vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000 ]
+  end  
+  
+  #config.vm.synced_folder ".", "/vagrant", type: "rsync"
+  config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
+  
+  node_ip = IPAddr.new(x.fetch('ip').fetch('node'))
+
+  $num_instances = x.fetch('node').fetch('count')
+  (1..$num_instances).each do |i|
+    config.vm.define "h#{i}" do |node|
+      # boxes at https://vagrantcloud.com/search.
+      #node.vm.box = "lasp/ubuntu18.04"
+      #node.vm.box = "bento/ubuntu-18.04"
+      node.vm.box = "generic/ubuntu1804"
+      node.vm.hostname = "h#{i}"
+      ip = "172.17.8.#{i+99}"
+      node.vm.network x.fetch('net').fetch('network_type'), ip: IPAddr.new(node_ip.to_i + i - 1, Socket::AF_INET).to_s, nic_type: $private_nic_type
+      #node.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+      # node.vm.network "public_network"
+      
+      node.vm.provider "virtualbox" do |vb|
+        vb.name="h#{i}"
+        vb.cpus = c.fetch('cpus')
+        vb.memory = c.fetch('memory')
+        
+      end
+      # config.vm.provision "shell", inline: <<-SHELL
+      #   apt-get update
+      #   apt-get install -y apache2
+      # SHELL
+      node.vm.provision "shell", path: "install.sh", args:[i]
+    end  
+  end
+end

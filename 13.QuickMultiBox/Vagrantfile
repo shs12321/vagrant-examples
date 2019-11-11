@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    config.vm.box_check_update = false
+    config.vm.provider 'virtualbox' do |vb|
+    vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000 ]
+  end  
+  config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
+
+  $num_instances = 2
+  (1..$num_instances).each do |i|
+    config.vm.define "h#{i}" do |node|
+    file = File.open("config/baseImage.txt")  
+    node.vm.box = file.read
+    node.vm.hostname = "h#{i}"
+    ip = "172.17.8.#{i+99}"
+    node.vm.network "private_network", ip: ip
+    
+    node.vm.provider "virtualbox" do |vb|
+      # vb.gui = true
+      vb.name="h#{i}"
+      vb.cpus = 1
+      vb.memory = "1024"
+      end
+      node.vm.provision "shell", path: "install.sh", args:[i]
+    end  
+  end
+end
