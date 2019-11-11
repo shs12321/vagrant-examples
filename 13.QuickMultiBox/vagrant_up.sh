@@ -88,6 +88,11 @@ fi
 
 
 
+# cf
+# baseImage=generic/ubuntu1804
+# newImage=nowage/$(echo "generic/ubuntu1804"|sed 's/\//_/g')
+
+
 
 
 
